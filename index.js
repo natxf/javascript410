@@ -4,7 +4,8 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const fs = require('fs');
-
+const cors = require('cors');
+app.use(cors());
 let data = fs.readFileSync(path.join(__dirname, 'jokes.json'), 'utf8');
 // define endpoint for exercise 1 here
 app.get('/math/circle/:r', (req, res) => {
@@ -72,7 +73,7 @@ app.get('/jokebook/joke/:category', (req, res) =>{
   res.json(randomJoke)
 })
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
