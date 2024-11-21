@@ -16,10 +16,20 @@ app.get('/math/circle/:r', (req, res) => {
   res.json(result);
 });
 
-app.get('/math/rectangle/2/3')
-
 //TODO2
+app.get('/math/rectangle/:width/:height', (req, res) => {
+  const width = req.params.width;
+  const height = req.params.height;
 
+  const a = width * height;
+  const p = 2 * (width + height);
+
+  const result = {
+    area: a,
+    perimeter: p
+  };
+  res.json(result);
+})
 
 //TODO3
 
