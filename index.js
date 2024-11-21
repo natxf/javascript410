@@ -2,7 +2,10 @@
 
 const express = require('express');
 const app = express();
+const path = require('path');
+const fs = require('fs');
 
+let data = fs.readFileSync(path.join(__dirname, 'jokes.json'), 'utf8');
 // define endpoint for exercise 1 here
 app.get('/math/circle/:r', (req, res) => {
 //TODO1  
@@ -51,6 +54,22 @@ app.get('/math/power/:base/:exponent', (req, res) => {
     response.root=Math.sqrt(base)
   }
   res.json(response)
+})
+//TODO4
+app.get('/jokebook/categories', (req, res) => {
+  const categories = JSON.parse(data).categories;
+  res.json(categories);
+})
+const jokesData = JSON.parse(data);
+//TODO5
+app.get('/jokebook/joke/:category', (req, res) =>{
+  const category = req.params.category;
+  if(!jokesData.categories.includes(category)){
+    return res.status(404).json({error: 'Category not found'});
+  }
+  const jokes = jokesData[category]
+  const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+  res.json(randomJoke)
 })
 
 const PORT = process.env.PORT || 3000;
